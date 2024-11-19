@@ -1,0 +1,6 @@
+extends Node
+
+signal player_movement_state_change
+signal player_action_state_change
+
+signal player_entered_none

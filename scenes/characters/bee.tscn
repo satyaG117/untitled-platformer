@@ -1,0 +1,124 @@
+[gd_scene load_steps=11 format=3 uid="uid://eyr7yhfl0to0"]
+
+[ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="1_lwqc6"]
+[ext_resource type="Texture2D" uid="uid://kh0bt1d7my7l" path="res://assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/bee-spritesheet.png" id="3_goikn"]
+[ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="4_5pppf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kehn4"]
+size = Vector2(4.66667, 22)
+
+[sub_resource type="Animation" id="Animation_3r2pj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_pfeu0"]
+resource_name = "attack"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_6vtx5"]
+resource_name = "fly"
+length = 0.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_cem21"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hj4we"]
+_data = {
+"RESET": SubResource("Animation_3r2pj"),
+"attack": SubResource("Animation_pfeu0"),
+"fly": SubResource("Animation_6vtx5"),
+"hit": SubResource("Animation_cem21")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8aypl"]
+radius = 10.6667
+height = 24.0
+
+[node name="Bee" type="CharacterBody2D"]
+scale = Vector2(0.75, 0.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_goikn")
+hframes = 4
+vframes = 3
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("4_5pppf")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitboxComponent"]
+position = Vector2(-14.6667, 2.66667)
+shape = SubResource("RectangleShape2D_kehn4")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hj4we")
+}
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("1_lwqc6")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_8aypl")
+
+[node name="BeeStateMachine" type="Node" parent="."]

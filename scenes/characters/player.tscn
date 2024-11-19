@@ -1,0 +1,315 @@
+[gd_scene load_steps=28 format=3 uid="uid://co50twk351356"]
+
+[ext_resource type="Texture2D" uid="uid://bhoo82aymbmow" path="res://assets/Warrior/SpriteSheet/Warrior_Sheet-Effect.png" id="1_poyak"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_tfk4x"]
+[ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="2_k0fjq"]
+[ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="5_dv7f2"]
+[ext_resource type="Script" path="res://scripts/player/player_movement_state_machine.gd" id="6_oc2dj"]
+[ext_resource type="Script" path="res://scripts/player/player_idle.gd" id="7_q8kp7"]
+[ext_resource type="Script" path="res://scripts/player/player_run.gd" id="8_c8hml"]
+[ext_resource type="Script" path="res://scripts/player/player_death.gd" id="9_3mq7q"]
+[ext_resource type="Script" path="res://scripts/player/player_jump.gd" id="9_twhab"]
+[ext_resource type="Script" path="res://scripts/player/player_fall.gd" id="10_ik6yv"]
+[ext_resource type="Script" path="res://scripts/player/player_action_state_machine.gd" id="11_sweyd"]
+[ext_resource type="Script" path="res://scripts/player/player_none.gd" id="12_pm8xg"]
+[ext_resource type="Script" path="res://scripts/player/player_attack.gd" id="13_ek3us"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l2b1"]
+size = Vector2(28, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1oua"]
+size = Vector2(13.3333, 30.6667)
+
+[sub_resource type="Animation" id="Animation_1rvb0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jr3rf"]
+resource_name = "attack_1"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 20, 21, 22]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.275, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_mqkat"]
+resource_name = "attack_2"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166, 0.332, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.166, 0.345),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wmbok"]
+resource_name = "attack_3"
+length = 0.5
+step = 0.083
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [77, 78, 79, 80, 81, 82]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.38),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_bub8k"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+}
+
+[sub_resource type="Animation" id="Animation_30qqf"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_fg0hb"]
+resource_name = "jump_end"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [46, 47, 48]
+}
+
+[sub_resource type="Animation" id="Animation_nsha3"]
+resource_name = "jump_mid"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [44]
+}
+
+[sub_resource type="Animation" id="Animation_sr86u"]
+resource_name = "jump_start"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [41, 42, 43]
+}
+
+[sub_resource type="Animation" id="Animation_uuhfk"]
+resource_name = "run"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11, 12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5qtew"]
+_data = {
+"RESET": SubResource("Animation_1rvb0"),
+"attack_1": SubResource("Animation_jr3rf"),
+"attack_2": SubResource("Animation_mqkat"),
+"attack_3": SubResource("Animation_wmbok"),
+"death": SubResource("Animation_bub8k"),
+"idle": SubResource("Animation_30qqf"),
+"jump_end": SubResource("Animation_fg0hb"),
+"jump_mid": SubResource("Animation_nsha3"),
+"jump_start": SubResource("Animation_sr86u"),
+"run": SubResource("Animation_uuhfk")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mne5r"]
+radius = 8.0
+height = 32.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(5, -4)
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_tfk4x")
+
+[node name="Controller" type="Node" parent="."]
+
+[node name="PlayerMovementStateMachine" type="Node" parent="Controller" node_paths=PackedStringArray("player_action_SM", "starting_state")]
+script = ExtResource("6_oc2dj")
+player_action_SM = NodePath("../PlayerActionStateMachine")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Controller/PlayerMovementStateMachine"]
+script = ExtResource("7_q8kp7")
+
+[node name="Run" type="Node" parent="Controller/PlayerMovementStateMachine"]
+script = ExtResource("8_c8hml")
+
+[node name="Jump" type="Node" parent="Controller/PlayerMovementStateMachine"]
+script = ExtResource("9_twhab")
+
+[node name="Fall" type="Node" parent="Controller/PlayerMovementStateMachine"]
+script = ExtResource("10_ik6yv")
+
+[node name="PlayerActionStateMachine" type="Node" parent="Controller" node_paths=PackedStringArray("starting_state")]
+script = ExtResource("11_sweyd")
+starting_state = NodePath("None")
+
+[node name="None" type="Node" parent="Controller/PlayerActionStateMachine"]
+script = ExtResource("12_pm8xg")
+
+[node name="Attack" type="Node" parent="Controller/PlayerActionStateMachine"]
+script = ExtResource("13_ek3us")
+
+[node name="Death" type="Node" parent="Controller/PlayerActionStateMachine"]
+script = ExtResource("9_3mq7q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-6.66667, 5.33333)
+texture = ExtResource("1_poyak")
+offset = Vector2(6.66667, -5.33333)
+hframes = 6
+vframes = 17
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("5_dv7f2")]
+position = Vector2(6.66667, -5.33333)
+damage = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitboxComponent"]
+position = Vector2(15.3333, 1.16667)
+shape = SubResource("RectangleShape2D_6l2b1")
+disabled = true
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(-6.66667, 6)
+shape = SubResource("RectangleShape2D_a1oua")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5qtew")
+}
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_k0fjq")]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(-7, 5)
+shape = SubResource("CapsuleShape2D_mne5r")
+
+[connection signal="animation_changed" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Attack" method="_on_animation_player_animation_changed"]
+[connection signal="animation_changed" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Death" method="_on_animation_player_animation_changed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Attack" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Death" method="_on_animation_player_animation_finished"]
