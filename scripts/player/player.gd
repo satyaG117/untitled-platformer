@@ -8,6 +8,7 @@ var current_health : float = MAX_HEALTH
 var is_player_input_disabled = false;
 
 func _ready():
+	GlobalVariables.player = self
 	player_movement_state_machine.init(self)
 	player_action_state_machine.init(self)
 	hurtbox_component.init(self)
