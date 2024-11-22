@@ -285,6 +285,8 @@ vframes = 17
 
 [node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("5_dv7f2")]
 position = Vector2(6.66667, -5.33333)
+collision_layer = 0
+collision_mask = 4
 damage = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitboxComponent"]

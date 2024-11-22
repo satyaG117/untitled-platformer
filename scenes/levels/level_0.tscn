@@ -35,4 +35,10 @@ damage = 9999.0
 shape = SubResource("WorldBoundaryShape2D_lekpa")
 
 [node name="Bee" parent="." instance=ExtResource("5_icldr")]
-position = Vector2(213, 416)
+position = Vector2(230, 389)
+
+[node name="Bee2" parent="." instance=ExtResource("5_icldr")]
+position = Vector2(421, 258)
+
+[node name="Bee3" parent="." instance=ExtResource("5_icldr")]
+position = Vector2(170, 266)
