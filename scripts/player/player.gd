@@ -36,6 +36,7 @@ func die():
 
 func take_damage(damage):
 	current_health -= damage
+	Utility.hit_stop(0.15)
 	if(current_health <= 0):
 		die()
 

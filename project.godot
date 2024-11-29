@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*res://scripts/global scripts/SignalBus.gd"
 GlobalVariables="*res://scripts/global scripts/GlobalVariables.gd"
+Utility="*res://scripts/global scripts/Utility.gd"
 
 [display]
 
