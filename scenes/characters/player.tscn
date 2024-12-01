@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://co50twk351356"]
+[gd_scene load_steps=32 format=3 uid="uid://co50twk351356"]
 
 [ext_resource type="Texture2D" uid="uid://bhoo82aymbmow" path="res://assets/Warrior/SpriteSheet/Warrior_Sheet-Effect.png" id="1_poyak"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_tfk4x"]
@@ -33,6 +33,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
 }
 
 [sub_resource type="Animation" id="Animation_jr3rf"]
@@ -221,6 +233,9 @@ tracks/0/keys = {
 "values": [6, 7, 8, 9, 10, 11, 12]
 }
 
+[sub_resource type="Animation" id="Animation_jqvv7"]
+resource_name = "hit"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5qtew"]
 _data = {
 "RESET": SubResource("Animation_1rvb0"),
@@ -228,11 +243,67 @@ _data = {
 "attack_2": SubResource("Animation_mqkat"),
 "attack_3": SubResource("Animation_wmbok"),
 "death": SubResource("Animation_bub8k"),
+"hit": SubResource("Animation_jqvv7"),
 "idle": SubResource("Animation_30qqf"),
 "jump_end": SubResource("Animation_fg0hb"),
 "jump_mid": SubResource("Animation_nsha3"),
 "jump_start": SubResource("Animation_sr86u"),
 "run": SubResource("Animation_uuhfk")
+}
+
+[sub_resource type="Animation" id="Animation_hnis5"]
+resource_name = "flash"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [true],
+"method": &"set_invincible_status"
+}, {
+"args": [false],
+"method": &"set_invincible_status"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_npdst"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ro3rx"]
+_data = {
+"RESET": SubResource("Animation_npdst"),
+"flash": SubResource("Animation_hnis5")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mne5r"]
@@ -301,6 +372,11 @@ shape = SubResource("RectangleShape2D_a1oua")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_5qtew")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ro3rx")
 }
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("2_k0fjq")]

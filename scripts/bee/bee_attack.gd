@@ -18,5 +18,5 @@ func _on_animation_player_animation_finished(anim_name):
 	handle_attack_end(anim_name)
 
 
-func _on_animation_player_animation_changed(old_name, new_name):
-	handle_attack_end(old_name)
+#func _on_animation_player_animation_changed(old_name, new_name):
+	#handle_attack_end(old_name)
