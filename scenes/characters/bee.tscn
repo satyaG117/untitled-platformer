@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://eyr7yhfl0to0"]
+[gd_scene load_steps=18 format=3 uid="uid://eyr7yhfl0to0"]
 
 [ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="1_lwqc6"]
 [ext_resource type="Script" path="res://scripts/bee/bee.gd" id="1_xqcgc"]
@@ -8,7 +8,8 @@
 [ext_resource type="Script" path="res://scripts/bee/bee_idle.gd" id="6_iwrma"]
 [ext_resource type="Script" path="res://scripts/bee/bee_cooldown.gd" id="7_77kvk"]
 [ext_resource type="Script" path="res://scripts/bee/bee_pursue.gd" id="8_qcvmx"]
-[ext_resource type="Script" path="res://scenes/characters/bee_attack.gd" id="9_jcbfr"]
+[ext_resource type="Script" path="res://scripts/bee/bee_attack.gd" id="9_uthno"]
+[ext_resource type="Script" path="res://scripts/bee/bee_hit.gd" id="10_nur1f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kehn4"]
 size = Vector2(6.3333, 22)
@@ -151,8 +152,13 @@ script = ExtResource("7_77kvk")
 script = ExtResource("8_qcvmx")
 
 [node name="Attack" type="Node" parent="BeeStateMachine"]
-script = ExtResource("9_jcbfr")
+script = ExtResource("9_uthno")
+
+[node name="Hit" type="Node" parent="BeeStateMachine"]
+script = ExtResource("10_nur1f")
 
 [connection signal="animation_changed" from="AnimationPlayer" to="BeeStateMachine/Attack" method="_on_animation_player_animation_changed"]
+[connection signal="animation_changed" from="AnimationPlayer" to="BeeStateMachine/Hit" method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="BeeStateMachine/Attack" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="BeeStateMachine/Hit" method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="BeeStateMachine/Cooldown/CooldownTimer" to="BeeStateMachine/Cooldown" method="_on_cooldown_timer_timeout"]

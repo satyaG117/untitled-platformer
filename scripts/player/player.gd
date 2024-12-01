@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
+@onready var animation_player_2 = $AnimationPlayer2
 @onready var player_action_state_machine = $Controller/PlayerActionStateMachine
 @onready var player_movement_state_machine = $Controller/PlayerMovementStateMachine
 @onready var hurtbox_component = $HurtboxComponent
 var MAX_HEALTH : float = 100
 var current_health : float = MAX_HEALTH
 var is_player_input_disabled = false;
+var isInvincible = false;
 
 func _ready():
 	GlobalVariables.player = self
@@ -29,14 +31,20 @@ func _physics_process(delta) -> void:
 	player_action_state_machine.process_physics(delta)
 	move_and_slide()
 
+func set_invincible_status(status: bool):
+	isInvincible = status
 
 func die():
 	is_player_input_disabled = true
 	player_action_state_machine.force_transition('death')
 
 func take_damage(damage):
+	if(isInvincible):
+		return
+	
 	current_health -= damage
 	Utility.hit_stop(0.15)
+	animation_player_2.play("flash")
 	if(current_health <= 0):
 		die()
 

@@ -23,5 +23,6 @@ func die():
 func take_damage(damage):
 	current_health -= damage
 	Utility.hit_stop(0.15)
+	bee_state_machine.force_transition("hit")
 	if(current_health <= 0):
 		die()
