@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://co50twk351356" path="res://scenes/characters/player.tscn" id="2_6c5ny"]
 [ext_resource type="TileSet" uid="uid://dg6xd5ya54gak" path="res://assets/tilesets/forest.tres" id="2_k01ij"]
 [ext_resource type="PackedScene" uid="uid://dsxh3eg7l1c0w" path="res://scenes/backgrounds/parallax_background.tscn" id="3_y0urp"]
-[ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="4_nmecj"]
+[ext_resource type="PackedScene" uid="uid://cunnxpp1cug8d" path="res://scenes/components/killzone.tscn" id="5_fqwt6"]
 [ext_resource type="PackedScene" uid="uid://eyr7yhfl0to0" path="res://scenes/characters/bee.tscn" id="5_icldr"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lekpa"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rk66w"]
 
 [node name="Level0" type="Node2D"]
 
@@ -26,13 +26,19 @@ zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="HitboxComponent" parent="." instance=ExtResource("4_nmecj")]
-position = Vector2(98, 649)
-collision_mask = 3
-damage = 9999.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-shape = SubResource("WorldBoundaryShape2D_lekpa")
-
 [node name="Bee" parent="." instance=ExtResource("5_icldr")]
 position = Vector2(230, 389)
+
+[node name="Bee2" parent="." instance=ExtResource("5_icldr")]
+position = Vector2(308, 334)
+
+[node name="Bee3" parent="." instance=ExtResource("5_icldr")]
+position = Vector2(948, 487)
+
+[node name="Killzone" parent="." instance=ExtResource("5_fqwt6")]
+position = Vector2(101, 555)
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+shape = SubResource("WorldBoundaryShape2D_rk66w")
