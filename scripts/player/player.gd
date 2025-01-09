@@ -14,8 +14,8 @@ var weight : float = 30.0
 
 func _ready():
 	GlobalVariables.player = self
-	player_movement_state_machine.init(self)
 	player_action_state_machine.init(self)
+	player_movement_state_machine.init(self)
 	hurtbox_component.init(self)
 	hitbox_component.init(self)
 	

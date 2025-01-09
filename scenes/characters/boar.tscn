@@ -1,0 +1,214 @@
+[gd_scene load_steps=20 format=3 uid="uid://csidbefa23dl0"]
+
+[ext_resource type="Script" path="res://scripts/boar/boar.gd" id="1_bb001"]
+[ext_resource type="Texture2D" uid="uid://cbq280iwtgrun" path="res://assets/Legacy-Fantasy - High Forest 2.3/Mob/Boar/boar-spritesheet.png" id="1_lfqrp"]
+[ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="2_l6rrg"]
+[ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="3_uoriu"]
+[ext_resource type="Script" path="res://scripts/boar/boar_state_machine.gd" id="4_ar03q"]
+[ext_resource type="Script" path="res://scripts/boar/boar_patrol.gd" id="5_3wf2g"]
+[ext_resource type="Script" path="res://scripts/boar/boar_charge.gd" id="6_0i28m"]
+[ext_resource type="Script" path="res://scripts/boar/boar_cooldown.gd" id="7_hf3ga"]
+[ext_resource type="Script" path="res://scripts/boar/boar_dead.gd" id="8_qqaxx"]
+[ext_resource type="Script" path="res://scripts/boar/boar_fall.gd" id="9_d2hky"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h73rm"]
+size = Vector2(4, 20)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cbimu"]
+radius = 11.0
+height = 40.0
+
+[sub_resource type="Animation" id="Animation_3dipe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_h2diq"]
+resource_name = "hit"
+length = 0.6
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_c2dwh"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_3ba52"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_wyi4r"]
+resource_name = "charge"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rmkyq"]
+_data = {
+"RESET": SubResource("Animation_3dipe"),
+"charge": SubResource("Animation_wyi4r"),
+"hit": SubResource("Animation_h2diq"),
+"idle": SubResource("Animation_c2dwh"),
+"walk": SubResource("Animation_3ba52")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ubvi"]
+radius = 11.0
+height = 40.0
+
+[node name="Boar" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_bb001")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lfqrp")
+hframes = 6
+vframes = 4
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("2_l6rrg")]
+collision_layer = 0
+collision_mask = 2
+damage = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitboxComponent"]
+position = Vector2(-19, 5)
+shape = SubResource("RectangleShape2D_h73rm")
+disabled = true
+
+[node name="GroundRayCast" type="RayCast2D" parent="Sprite2D"]
+position = Vector2(-19, 6)
+target_position = Vector2(0, 14)
+
+[node name="EnvironmentRayCast" type="RayCast2D" parent="Sprite2D"]
+position = Vector2(0, 11)
+target_position = Vector2(-35, 0)
+
+[node name="PlayerRayCast" type="RayCast2D" parent="Sprite2D"]
+position = Vector2(0, 5)
+target_position = Vector2(-150, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="BoarCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_cbimu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rmkyq")
+}
+
+[node name="BoarStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_ar03q")
+starting_state = NodePath("Patrol")
+
+[node name="Patrol" type="Node" parent="BoarStateMachine"]
+script = ExtResource("5_3wf2g")
+
+[node name="Charge" type="Node" parent="BoarStateMachine"]
+script = ExtResource("6_0i28m")
+
+[node name="Cooldown" type="Node" parent="BoarStateMachine"]
+script = ExtResource("7_hf3ga")
+
+[node name="CooldownTimer" type="Timer" parent="BoarStateMachine/Cooldown"]
+
+[node name="Dead" type="Node" parent="BoarStateMachine"]
+script = ExtResource("8_qqaxx")
+
+[node name="Fall" type="Node" parent="BoarStateMachine"]
+script = ExtResource("9_d2hky")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_uoriu")]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0ubvi")
+debug_color = Color(0.54902, 0.203922, 0.384314, 0.376471)
+
+[connection signal="timeout" from="BoarStateMachine/Cooldown/CooldownTimer" to="BoarStateMachine/Cooldown" method="_on_cooldown_timer_timeout"]
