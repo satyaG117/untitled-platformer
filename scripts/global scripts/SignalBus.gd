@@ -7,3 +7,6 @@ signal player_entered_none
 
 #bee signals
 signal bee_state_change
+
+#boar signals
+signal boar_state_change

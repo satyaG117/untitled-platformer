@@ -14,8 +14,8 @@ func init(parent):
 			states[child.name.to_lower()] = child
 	
 	current_state = starting_state
-	#if(current_state):
-		#current_state.enter()
+	if(current_state):
+		current_state.enter()
 	
 
 
