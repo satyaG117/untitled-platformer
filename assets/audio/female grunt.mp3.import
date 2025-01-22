@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0ua7vgyp53k3"
+path="res://.godot/imported/female grunt.mp3-c7cbaf1eee11b3021b49ac859d9d2093.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/female grunt.mp3"
+dest_files=["res://.godot/imported/female grunt.mp3-c7cbaf1eee11b3021b49ac859d9d2093.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

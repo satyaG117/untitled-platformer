@@ -4,12 +4,11 @@ var animation_player : AnimationPlayer
 @onready var cooldown_timer = $CooldownTimer
 
 func enter():
-	print("Boar state : Cooldown")
 	
 	parent.velocity.x = 0
 	animation_player = parent.get_node('AnimationPlayer')
 	animation_player.play('idle')
-	cooldown_timer.wait_time = randf_range(2.0, 3.0) 
+	cooldown_timer.wait_time = randf_range(1.5, 2.5) 
 	cooldown_timer.start()
 	
 

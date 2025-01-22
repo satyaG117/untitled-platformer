@@ -1,6 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://co50twk351356"]
+[gd_scene load_steps=34 format=3 uid="uid://co50twk351356"]
 
-[ext_resource type="Texture2D" uid="uid://bhoo82aymbmow" path="res://assets/Warrior/SpriteSheet/Warrior_Sheet-Effect.png" id="1_poyak"]
+[ext_resource type="Texture2D" uid="uid://bhoo82aymbmow" path="res://assets/sprites/Warrior/SpriteSheet/Warrior_Sheet-Effect.png" id="1_poyak"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_tfk4x"]
 [ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="2_k0fjq"]
 [ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="5_dv7f2"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_action_state_machine.gd" id="11_sweyd"]
 [ext_resource type="Script" path="res://scripts/player/player_none.gd" id="12_pm8xg"]
 [ext_resource type="Script" path="res://scripts/player/player_attack.gd" id="13_ek3us"]
+[ext_resource type="PackedScene" uid="uid://dsecdmx5jdu0w" path="res://scenes/components/custom_audio_stream_player_2d.tscn" id="14_rbd10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6l2b1"]
 size = Vector2(28, 19)
@@ -45,6 +46,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtboxComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_jr3rf"]
@@ -146,6 +159,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HurtboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_jqvv7"]
@@ -310,6 +335,8 @@ _data = {
 radius = 8.0
 height = 32.0
 
+[sub_resource type="AudioStream" id="AudioStream_x2txy"]
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(5, -4)
 scale = Vector2(0.75, 0.75)
@@ -389,6 +416,10 @@ collision_mask = 0
 position = Vector2(-7, 5)
 shape = SubResource("CapsuleShape2D_mne5r")
 debug_color = Color(0.54902, 0.203922, 0.384314, 0.490196)
+
+[node name="CustomAudioStreamPlayer2D" parent="." instance=ExtResource("14_rbd10")]
+stream = SubResource("AudioStream_x2txy")
+bus = &"SFX"
 
 [connection signal="animation_changed" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Attack" method="_on_animation_player_animation_changed"]
 [connection signal="animation_changed" from="AnimationPlayer" to="Controller/PlayerActionStateMachine/Death" method="_on_animation_player_animation_changed"]
