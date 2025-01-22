@@ -3,10 +3,15 @@ extends State
 var animation_player : AnimationPlayer
 var sprite_2d : Sprite2D
 const SPEED:float = 200.0
+var audio_stream_player : CustomAudioStreamPlayer2D
 
 func enter():
 	animation_player = parent.get_node('AnimationPlayer')
 	sprite_2d = parent.get_node('Sprite2D')
+	audio_stream_player = parent.get_node('CustomAudioStreamPlayer2D')
+	audio_stream_player.load_stream("res://assets/audio/running.wav")
+	
+	audio_stream_player.play()
 	if(parent.get_node("Controller/PlayerActionStateMachine").current_state.name.to_lower() == "none"):
 		animation_player.play("run")
 	
@@ -31,3 +36,6 @@ func process_input(event : InputEvent):
 
 func _on_entered_none():
 	animation_player.play("run")
+	
+func exit():
+	audio_stream_player.reset()

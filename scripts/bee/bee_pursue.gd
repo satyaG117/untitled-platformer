@@ -8,6 +8,7 @@ var move_speed : float = 70.0
 var current_player_position : Vector2
 var bee_position : Vector2
 var rng : RandomNumberGenerator
+var audio_stream_player = CustomAudioStreamPlayer2D
 
 func enter():
 	print("Bee pursue")
@@ -15,6 +16,11 @@ func enter():
 	sprite_2d = parent.get_node('Sprite2D')
 	animation_player.play("fly");
 	rng = RandomNumberGenerator.new()
+	
+	audio_stream_player = parent.get_node("CustomAudioStreamPlayer2D")
+	audio_stream_player.pitch_scale = 1.2
+	audio_stream_player.load_stream("res://assets/audio/insect-buzzing.mp3")
+	audio_stream_player.play()
 	
 
 func process_physics(delta):
@@ -56,3 +62,7 @@ func process_physics(delta):
 				SignalBus.bee_state_change.emit(self, "attack")
 			 
 		frames_since_last_check = 5
+
+
+func exit():
+	audio_stream_player.reset()

@@ -1,8 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://eyr7yhfl0to0"]
+[gd_scene load_steps=19 format=3 uid="uid://eyr7yhfl0to0"]
 
 [ext_resource type="PackedScene" uid="uid://d3v5lhd53ofl5" path="res://scenes/components/hurtbox_component.tscn" id="1_lwqc6"]
 [ext_resource type="Script" path="res://scripts/bee/bee.gd" id="1_xqcgc"]
-[ext_resource type="Texture2D" uid="uid://kh0bt1d7my7l" path="res://assets/Legacy-Fantasy - High Forest 2.3/Mob/Small Bee/bee-spritesheet.png" id="3_goikn"]
+[ext_resource type="Texture2D" uid="uid://kh0bt1d7my7l" path="res://assets/sprites/Mob/Small Bee/bee-spritesheet.png" id="2_gwnj5"]
 [ext_resource type="PackedScene" uid="uid://chp0tusy258lr" path="res://scenes/components/hitbox_component.tscn" id="4_5pppf"]
 [ext_resource type="Script" path="res://scripts/bee/bee_state_machine.gd" id="5_bsui1"]
 [ext_resource type="Script" path="res://scripts/bee/bee_idle.gd" id="6_iwrma"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/bee/bee_pursue.gd" id="8_qcvmx"]
 [ext_resource type="Script" path="res://scripts/bee/bee_attack.gd" id="9_uthno"]
 [ext_resource type="Script" path="res://scripts/bee/bee_hit.gd" id="10_nur1f"]
+[ext_resource type="PackedScene" uid="uid://dsecdmx5jdu0w" path="res://scenes/components/custom_audio_stream_player_2d.tscn" id="11_038hl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kehn4"]
 size = Vector2(6.3333, 22)
@@ -120,7 +121,7 @@ scale = Vector2(0.75, 0.75)
 script = ExtResource("1_xqcgc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_goikn")
+texture = ExtResource("2_gwnj5")
 hframes = 4
 vframes = 3
 
@@ -168,6 +169,10 @@ script = ExtResource("9_uthno")
 
 [node name="Hit" type="Node" parent="BeeStateMachine"]
 script = ExtResource("10_nur1f")
+
+[node name="CustomAudioStreamPlayer2D" parent="." instance=ExtResource("11_038hl")]
+max_distance = 600.0
+bus = &"SFX"
 
 [connection signal="animation_changed" from="AnimationPlayer" to="BeeStateMachine/Attack" method="_on_animation_player_animation_changed"]
 [connection signal="animation_changed" from="AnimationPlayer" to="BeeStateMachine/Hit" method="_on_animation_player_animation_changed"]

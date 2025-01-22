@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dsxh3eg7l1c0w"]
 
-[ext_resource type="Texture2D" uid="uid://coeqeyob00r2a" path="res://assets/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_hraap"]
+[ext_resource type="Texture2D" uid="uid://coeqeyob00r2a" path="res://assets/sprites/Background/Background.png" id="1_hraap"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 

@@ -1,9 +1,10 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dg6xd5ya54gak"]
 
-[ext_resource type="Texture2D" uid="uid://cjkjsiqo1g622" path="res://assets/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_ub1qj"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rdq4a"]
+load_path = "res://.godot/imported/Tiles.png-9938b1eefa4aa2edccd2996ab3f7d1c5.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfc0d"]
-texture = ExtResource("1_ub1qj")
+texture = SubResource("CompressedTexture2D_rdq4a")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
