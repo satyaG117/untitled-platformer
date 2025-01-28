@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c3q85icpb6oxe"]
+[gd_scene load_steps=21 format=3 uid="uid://c3q85icpb6oxe"]
 
 [ext_resource type="PackedScene" uid="uid://co50twk351356" path="res://scenes/characters/player.tscn" id="2_6c5ny"]
 [ext_resource type="TileSet" uid="uid://dg6xd5ya54gak" path="res://assets/tilesets/forest.tres" id="2_k01ij"]
@@ -8,8 +8,25 @@
 [ext_resource type="PackedScene" uid="uid://csidbefa23dl0" path="res://scenes/characters/boar.tscn" id="6_pl6el"]
 [ext_resource type="AudioStream" uid="uid://dqdt3xbckgy65" path="res://assets/audio/water-adventure-music.mp3" id="7_566rk"]
 [ext_resource type="PackedScene" uid="uid://bxbq6sv2ixuel" path="res://scenes/platform.tscn" id="7_f8jcv"]
+[ext_resource type="PackedScene" uid="uid://cggbeh47702xw" path="res://scenes/pickables/coin.tscn" id="8_c1g47"]
+[ext_resource type="PackedScene" uid="uid://dn5uwvb7wsiq8" path="res://scenes/pickables/health_potion.tscn" id="9_hd3yy"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rk66w"]
+
+[sub_resource type="Animation" id="Animation_mwdi4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(567, 415)]
+}
 
 [sub_resource type="Animation" id="Animation_m5jyo"]
 resource_name = "move"
@@ -28,7 +45,13 @@ tracks/0/keys = {
 "values": [Vector2(567, 415), Vector2(708, 415)]
 }
 
-[sub_resource type="Animation" id="Animation_mwdi4"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ky157"]
+_data = {
+"RESET": SubResource("Animation_mwdi4"),
+"move": SubResource("Animation_m5jyo")
+}
+
+[sub_resource type="Animation" id="Animation_p7p78"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -40,13 +63,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(567, 415)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ky157"]
-_data = {
-"RESET": SubResource("Animation_mwdi4"),
-"move": SubResource("Animation_m5jyo")
+"values": [Vector2(1376, 237)]
 }
 
 [sub_resource type="Animation" id="Animation_44hby"]
@@ -66,7 +83,13 @@ tracks/0/keys = {
 "values": [Vector2(1376, 237), Vector2(1376, 405)]
 }
 
-[sub_resource type="Animation" id="Animation_p7p78"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y31al"]
+_data = {
+"RESET": SubResource("Animation_p7p78"),
+"move": SubResource("Animation_44hby")
+}
+
+[sub_resource type="Animation" id="Animation_mwrc4"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -78,13 +101,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1376, 237)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_y31al"]
-_data = {
-"RESET": SubResource("Animation_p7p78"),
-"move": SubResource("Animation_44hby")
+"values": [Vector2(1118, 414)]
 }
 
 [sub_resource type="Animation" id="Animation_7yfgr"]
@@ -102,21 +119,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1118, 414), Vector2(1298, 414)]
-}
-
-[sub_resource type="Animation" id="Animation_mwrc4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1118, 414)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_muwok"]
@@ -177,23 +179,31 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="Platform3" parent="." instance=ExtResource("7_f8jcv")]
+[node name="Platform3" parent="Platforms" instance=ExtResource("7_f8jcv")]
 position = Vector2(1376, 237)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform3"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/Platform3"]
 libraries = {
 "": SubResource("AnimationLibrary_y31al")
 }
 autoplay = "move"
 
-[node name="Platform4" parent="." instance=ExtResource("7_f8jcv")]
+[node name="Platform4" parent="Platforms" instance=ExtResource("7_f8jcv")]
 position = Vector2(1118, 414)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/Platform4"]
 libraries = {
 "": SubResource("AnimationLibrary_muwok")
 }
 autoplay = "move"
+
+[node name="Pickups" type="Node" parent="."]
+
+[node name="Coin" parent="Pickups" instance=ExtResource("8_c1g47")]
+position = Vector2(113, 412)
+
+[node name="HealthPotion" parent="Pickups" instance=ExtResource("9_hd3yy")]
+position = Vector2(57, 411)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_566rk")

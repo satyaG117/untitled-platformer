@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cggbeh47702xw"]
+
+[ext_resource type="PackedScene" uid="uid://iy55lkecoikn" path="res://scenes/pickables/pickable.tscn" id="1_gc05j"]
+[ext_resource type="Texture2D" uid="uid://cjkjsiqo1g622" path="res://assets/sprites/Tiles.png" id="2_ob5ss"]
+[ext_resource type="Script" path="res://scripts/pickups/coin.gd" id="2_sm7f1"]
+[ext_resource type="AudioStream" uid="uid://c8vpirtysfjfw" path="res://assets/audio/coin-pickup.wav" id="4_ii3us"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bb260"]
+size = Vector2(8, 10)
+
+[node name="Coin" instance=ExtResource("1_gc05j")]
+script = ExtResource("2_sm7f1")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_bb260")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_ob5ss")
+region_enabled = true
+
+[node name="AudioStreamPlayer2D" parent="." index="3"]
+stream = ExtResource("4_ii3us")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

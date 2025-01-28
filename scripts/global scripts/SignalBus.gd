@@ -10,3 +10,6 @@ signal bee_state_change
 
 #boar signals
 signal boar_state_change
+
+#pickups
+signal coin_pickup
