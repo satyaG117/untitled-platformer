@@ -19,6 +19,9 @@ func _ready():
 	hurtbox_component.init(self)
 	hitbox_component.init(self)
 	
+	SignalBus.player_instantiated.emit();
+	
+
 func _unhandled_input(event: InputEvent):
 	if(is_player_input_disabled):
 		return
@@ -46,10 +49,22 @@ func process_attack(attack):
 	if(isInvincible && !attack.insta_kill):
 		return
 	
+	
 	current_health -= attack.damage
+	SignalBus.player_hit.emit()
 	Utility.hit_stop(0.15)
 	animation_player_2.play("flash")
 	if(current_health <= 0):
 		die()
 
 
+func process_healing(health_points : float):
+	if(current_health == MAX_HEALTH):
+		return;
+	
+	print("Inside player heal function")
+	#variable = value1 if condition else value2
+	print("Health before healing : ", current_health);
+	current_health = MAX_HEALTH if current_health + health_points >= MAX_HEALTH else current_health + health_points
+	print("Health after healing : ", current_health);
+	SignalBus.player_heal.emit()

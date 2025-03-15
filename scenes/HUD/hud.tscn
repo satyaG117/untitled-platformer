@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn4rw4nnbmpit"]
+
+[ext_resource type="PackedScene" uid="uid://d0jmohhfkx7ij" path="res://scenes/HUD/health_bar.tscn" id="1_gg2ha"]
+[ext_resource type="PackedScene" uid="uid://iqo3edvj3spn" path="res://scenes/HUD/coin_counter.tscn" id="2_ops8y"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="HealthBar" parent="." instance=ExtResource("1_gg2ha")]
+offset_left = 34.0
+offset_top = 32.0
+offset_right = 284.0
+offset_bottom = 52.0
+
+[node name="CoinCounter" parent="." instance=ExtResource("2_ops8y")]
+offset = Vector2(980, 50)
+transform = Transform2D(1, 0, 0, 1, 980, 50)

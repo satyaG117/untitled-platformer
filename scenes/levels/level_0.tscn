@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c3q85icpb6oxe"]
+[gd_scene load_steps=22 format=3 uid="uid://c3q85icpb6oxe"]
 
 [ext_resource type="PackedScene" uid="uid://co50twk351356" path="res://scenes/characters/player.tscn" id="2_6c5ny"]
 [ext_resource type="TileSet" uid="uid://dg6xd5ya54gak" path="res://assets/tilesets/forest.tres" id="2_k01ij"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bxbq6sv2ixuel" path="res://scenes/platform.tscn" id="7_f8jcv"]
 [ext_resource type="PackedScene" uid="uid://cggbeh47702xw" path="res://scenes/pickables/coin.tscn" id="8_c1g47"]
 [ext_resource type="PackedScene" uid="uid://dn5uwvb7wsiq8" path="res://scenes/pickables/health_potion.tscn" id="9_hd3yy"]
+[ext_resource type="PackedScene" uid="uid://cn4rw4nnbmpit" path="res://scenes/HUD/hud.tscn" id="11_3s864"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rk66w"]
 
@@ -160,7 +161,7 @@ shape = SubResource("WorldBoundaryShape2D_rk66w")
 position = Vector2(398, 351)
 
 [node name="Bee2" parent="Enemies" instance=ExtResource("6_o0wyl")]
-position = Vector2(726, 503)
+position = Vector2(245, 286)
 
 [node name="Boar" parent="Enemies" instance=ExtResource("6_pl6el")]
 position = Vector2(1049, 410)
@@ -202,10 +203,21 @@ autoplay = "move"
 [node name="Coin" parent="Pickups" instance=ExtResource("8_c1g47")]
 position = Vector2(113, 412)
 
+[node name="Coin2" parent="Pickups" instance=ExtResource("8_c1g47")]
+position = Vector2(301, 404)
+
+[node name="Coin3" parent="Pickups" instance=ExtResource("8_c1g47")]
+position = Vector2(790, 415)
+
+[node name="Coin4" parent="Pickups" instance=ExtResource("8_c1g47")]
+position = Vector2(180, 412)
+
 [node name="HealthPotion" parent="Pickups" instance=ExtResource("9_hd3yy")]
-position = Vector2(57, 411)
+position = Vector2(501, 410)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_566rk")
 autoplay = true
 bus = &"BGM"
+
+[node name="HUD" parent="." instance=ExtResource("11_3s864")]
