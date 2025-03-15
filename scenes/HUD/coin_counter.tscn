@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://iqo3edvj3spn"]
+
+[ext_resource type="Texture2D" uid="uid://cjkjsiqo1g622" path="res://assets/sprites/Tiles.png" id="1_0d3ci"]
+[ext_resource type="Script" path="res://scripts/hud/coin_counter.gd" id="1_0lcnx"]
+
+[node name="CoinCounter" type="CanvasLayer"]
+script = ExtResource("1_0lcnx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("1_0d3ci")
+region_enabled = true
+region_rect = Rect2(244, 338, 8, 11)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 17.0
+offset_top = -19.0
+offset_right = 64.0
+offset_bottom = 15.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "x 10"
